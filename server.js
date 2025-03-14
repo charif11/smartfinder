@@ -11,11 +11,10 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // เชื่อมต่อกับ MongoDB
-const mongoUri = "mongodb://localhost:27017/gps_data"; // เปลี่ยนเป็น URI ของ MongoDB คุณ
-mongoose.connect(mongoUri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const mongoUri = "mongodb+srv://riffcharif5:B08pa9yNEn81FRV6@mydb.fpmbl.mongodb.net/?retryWrites=true&w=majority&appName=mydb"; // เปลี่ยนเป็น URI ของ MongoDB คุณ
+mongoose.connect(mongoUri)
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.error("MongoDB connection error:", err));
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
