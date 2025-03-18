@@ -26,9 +26,6 @@ db.once("open", () => {
 const gpsDataSchema = new mongoose.Schema({
   latitude: { type: Number, required: true },
   longitude: { type: Number, required: true },
-  altitude: { type: Number, required: true },
-  speed: { type: Number, required: true },
-  satellites: { type: Number, required: true },
   timestamp: { type: Date, default: Date.now },
 });
 
@@ -36,9 +33,9 @@ const GPSData = mongoose.model("GPSData", gpsDataSchema);
 
 // สร้าง endpoint เพื่อรับข้อมูล GPS
 app.post("/api/gps", async (req, res) => {
-  const { latitude, longitude, altitude, speed, satellites } = req.body;
+  const { latitude, longitude } = req.body;
 
-  if (!latitude || !longitude || !altitude || !speed || !satellites) {
+  if (!latitude || !longitude ) {
     return res.status(400).json({ message: "Missing required fields" });
   }
   console.log({ data: req.body });
@@ -47,9 +44,6 @@ app.post("/api/gps", async (req, res) => {
     const newData = new GPSData({
       latitude,
       longitude,
-      altitude,
-      speed,
-      satellites,
     });
 
     await newData.save();
